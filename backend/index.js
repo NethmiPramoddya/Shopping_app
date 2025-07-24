@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import userRouter from './router/userRouter.js';
 import jwt from 'jsonwebtoken'
+import productRouter from './router/productRoter.js';
 
 const app = express();
 
@@ -45,7 +46,8 @@ mongoose.connect(connectionString).then(
     }
 )
 
-app.use("/users", userRouter)
+app.use("/api/users", userRouter)
+app.use("/api/products", productRouter)
 
 app.get("/",(req,res)=>{
     console.log(req);
