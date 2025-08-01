@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function AddProductAdminPage(){
     const[productId, setProductId] = useState("")
@@ -12,6 +14,7 @@ export default function AddProductAdminPage(){
     const[stock, setStock] = useState("")
     const[isAvailable, setIsAvailable] = useState(true)
     const[category, setCategory] = useState("Cream")
+    const navigate = useNavigate()
 
     function handleSubmit (){
         const altNamesInArray= altNames.split(",")
@@ -28,6 +31,29 @@ export default function AddProductAdminPage(){
             category: category
         }
         console.log(productData);
+
+        const token = localStorage.getItem("token")
+        if(token==null){
+            window.location.href ="/login";
+            return;
+        }
+
+        axios.post(import.meta.env.VITE_BACKEND_URL+"/api/products",productData,{
+            
+            headers: {
+                Authorization: "Bearer " + token}
+
+        }).then(
+            (res)=>{
+                console.log("Product added successfully")
+                console.log(res.data)
+                toast.success("Product added successfully")
+                navigate("/admin/products")
+            }).catch(
+                (error)=>{
+            console.error("error adding products"+error)
+            toast.error("error adding products")
+            })
     }
 
     return(
