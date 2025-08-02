@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import MediaUpload from "../../utils/mediaUpload";
 
 export default function AddProductAdminPage(){
     const[productId, setProductId] = useState("")
@@ -9,14 +10,27 @@ export default function AddProductAdminPage(){
     const[altNames, setAltNames] = useState("")
     const[labelledPrice, setLabelledPrice] = useState("")
     const[price, setPrice] = useState("")
-    const[image, setImage] = useState("")
+    const[image, setImage] = useState([])
     const[description, setDescription] = useState("")
     const[stock, setStock] = useState("")
     const[isAvailable, setIsAvailable] = useState(true)
     const[category, setCategory] = useState("Cream")
     const navigate = useNavigate()
 
-    function handleSubmit (){
+    async function handleSubmit (){
+
+        const promisesArray = [];
+
+        for(let i=0; i<image.length; i++){
+            //console.log(image[i])
+
+            const promise = MediaUpload(image[i])
+            promisesArray[i] = promise
+        }
+
+        const responses = await Promise.all(promisesArray)
+        console.log(responses)
+
         const altNamesInArray= altNames.split(",")
         const productData = {
             productId: productId,
@@ -24,7 +38,7 @@ export default function AddProductAdminPage(){
             altNames: altNamesInArray,
             labelledPrice: labelledPrice,
             price: price,
-            image: image,
+            image: responses,
             description: description,
             stock: stock,
             isAvailable: isAvailable,
@@ -86,7 +100,7 @@ export default function AddProductAdminPage(){
 
                     <div className="w-[500px] flex flex-col gap-[5px]">
                         <label htmlFor="" className="text-sm font-semibold">Images</label>
-                        <input type="text" value={image} onChange={(e)=>setImage(e.target.value)} className="w-full border-[1px] h-[40px] rounded-md" />
+                        <input multiple type="file" onChange={(e)=>{setImage(e.target.files)}} className="w-full border-[1px] h-[40px] rounded-md" />
                     </div>
 
                     <div className="w-[500px] flex flex-col gap-[5px]">
@@ -100,7 +114,7 @@ export default function AddProductAdminPage(){
                     </div>
 
                      <div className="w-[200px] flex flex-col gap-[5px]">
-                        <label htmlFor="" className="text-sm font-semibold">Stock</label>
+                        <label htmlFor="" className="text-sm font-semibold">Is Available</label>
                         <select value={isAvailable} onChange={(e)=>setIsAvailable(e.target.value)} className="w-full border-[1px] h-[40px] rounded-md">
                             <option value={true}>Available</option>
                             <option value={false}> Not Available</option>
@@ -108,7 +122,7 @@ export default function AddProductAdminPage(){
                     </div>
 
                     <div className="w-[200px] flex flex-col gap-[5px]">
-                        <label htmlFor="" className="text-sm font-semibold">Stock</label>
+                        <label htmlFor="" className="text-sm font-semibold">Category</label>
                         <select value={category} onChange={(e)=>setCategory(e.target.value)} className="w-full border-[1px] h-[40px] rounded-md">
                             <option value="Cream">Cream</option>
                             <option value="Face Wash">Face Wash</option>

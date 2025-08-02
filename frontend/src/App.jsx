@@ -8,6 +8,7 @@ import RegisterPage from './pages/registerPage'
 import AdminPage from './pages/adminPage'
 import TestPage from './pages/testPage'
 import { Toaster } from 'react-hot-toast';
+import Test2Page from './pages/test2Page'
 
 function App() {
   
@@ -21,6 +22,7 @@ function App() {
         <Route path='/' element={<Homepage/>}/>
         <Route path='/login' element={<LoginPage/>}/>
         <Route path='/test' element={<TestPage/>}/>
+        <Route path='/test2' element={<Test2Page/>}/>
         <Route path='/register' element={<RegisterPage/>}/>
         <Route path='/admin/*' element={<AdminPage/>}/>
         {/* <ProductCard 
