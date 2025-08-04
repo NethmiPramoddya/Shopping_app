@@ -9,6 +9,8 @@ import AdminPage from './pages/adminPage'
 import TestPage from './pages/testPage'
 import { Toaster } from 'react-hot-toast';
 import Test2Page from './pages/test2Page'
+import Test3 from './pages/test3'
+import ClientPage from './pages/client/clientPage'
 
 function App() {
   
@@ -19,12 +21,14 @@ function App() {
       <div className='w-full h-screen'>
         <Toaster position='top-right' />
         <Routes path ="/">
-        <Route path='/' element={<Homepage/>}/>
+        
         <Route path='/login' element={<LoginPage/>}/>
         <Route path='/test' element={<TestPage/>}/>
         <Route path='/test2' element={<Test2Page/>}/>
+        <Route path='/test3' element={<Test3/>}/>
         <Route path='/register' element={<RegisterPage/>}/>
         <Route path='/admin/*' element={<AdminPage/>}/>
+        <Route path='/*' element={<ClientPage/>}/>
         {/* <ProductCard 
             name="Samsung galaxy S24 Ultra"
             price="$1900"

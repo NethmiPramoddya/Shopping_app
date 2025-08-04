@@ -4,6 +4,8 @@ import { FaPlus } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegTrashCan } from "react-icons/fa6";
 import toast from "react-hot-toast";
+import { MdEdit } from "react-icons/md";
+import Loader from "../../components/loader";
 
 // const sampleProducts = [
 //   {
@@ -70,27 +72,32 @@ import toast from "react-hot-toast";
 
 export default function ProductsAdminPage(){
     const [products, setProducts] = useState([]);
-    const [a, setA] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
+
+    //const [a, setA] = useState(0);
 
     // backend data rerieval
     //setProducts();
 
     useEffect(() =>{
+        if(isLoading){
         axios.get(import.meta.env.VITE_BACKEND_URL+"/api/products")
         .then((res) => {
             console.log(res.data);
             setProducts(res.data);
+            setIsLoading(false)
         })
         .catch((err) => {
             console.error("Error fetching products:", err);
         });
-    }, [a]);
+    }
+    }, [isLoading]);
 
     const navigate = useNavigate();
 
     return(
         <div className="w-full h-full border-[3px]">
-            <table>
+            {isLoading?(<Loader/>):(<table>
                 <thead>
                     <tr>
                         <th className="p-[10px]">Images</th>
@@ -118,7 +125,7 @@ export default function ProductsAdminPage(){
                                 <td className="p-[10px]">{product.labelledPrice}</td>
                                 <td className="p-[10px]">{product.category}</td>
                                 <td className="p-[10px]">{product.stock}</td>
-                                <td className="p-[10px] flex justify-center items-center mt-3.5">
+                                <td className="p-[10px] flex justify-center items-center mt-2.5 gap-1.5">
                                     <button><FaRegTrashCan className="text-white bg-red-500 rounded-full text-3xl p-2 cursor-pointer" onClick={
                                         () =>{
                                             const token = localStorage.getItem("token");
@@ -136,7 +143,7 @@ export default function ProductsAdminPage(){
                                                 console.log("Product deleted");
                                                 console.log( res.data);
                                                 toast.success("Product deleted successfully");
-                                                setA(a+1)
+                                                setIsLoading(!isLoading)
                                                 
                                             })
                                             .catch((err) => {
@@ -145,6 +152,9 @@ export default function ProductsAdminPage(){
                                             });
                                         }
                                     }  /></button>
+                                    <button><MdEdit onClick={()=>navigate("/admin/updateProduct",{
+                                        state:product
+                                    })} className="text-white bg-blue-500 rounded-full text-3xl p-2 cursor-pointer"/></button>
                                 </td>
                                 </tr>
                             )
@@ -152,7 +162,7 @@ export default function ProductsAdminPage(){
                     }
                  
                 </tbody>
-            </table>
+            </table>)}
             <Link to="/admin/newProduct" className="fixed right-[60px] bottom-[60px] p-[20px] rounded-full text-white bg-black">
                 <FaPlus className="text-3xl"/>
             </Link>

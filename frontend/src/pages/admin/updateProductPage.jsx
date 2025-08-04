@@ -1,0 +1,150 @@
+import { useState } from "react";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
+import MediaUpload from "../../utils/mediaUpload";
+
+export default function UpdateProductPage(){
+    const location = useLocation();
+    const[productId, setProductId] = useState(location.state.productId)
+    const[name, setName] = useState(location.state.name)
+    const[altNames, setAltNames] = useState(location.state.altNames.join(","))
+    const[labelledPrice, setLabelledPrice] = useState(location.state.labelledPrice)
+    const[price, setPrice] = useState(location.state.price)
+    const[image, setImage] = useState([])
+    const[description, setDescription] = useState(location.state.description)
+    const[stock, setStock] = useState(location.state.stock)
+    const[isAvailable, setIsAvailable] = useState(location.state.isAvailable)
+    const[category, setCategory] = useState(location.state.category)
+    const navigate = useNavigate()
+
+
+    async function handleSubmit (){
+
+        const promisesArray = [];
+
+        for(let i=0; i<image.length; i++){
+            //console.log(image[i])
+
+            const promise = MediaUpload(image[i])
+            promisesArray[i] = promise
+        }
+
+        const responses = await Promise.all(promisesArray)
+        console.log(responses)
+
+        const altNamesInArray= altNames.split(",")
+        const productData = {
+            productId: productId,
+            name: name,
+            altNames: altNamesInArray,
+            labelledPrice: labelledPrice,
+            price: price,
+            image: responses,
+            description: description,
+            stock: stock,
+            isAvailable: isAvailable,
+            category: category
+        }
+        console.log(productData);
+
+        if(responses.length == 0){
+            productData.image = location.state.image
+        }
+
+        const token = localStorage.getItem("token")
+        if(token==null){
+            window.location.href ="/login";
+            return;
+        }
+
+        axios.put(import.meta.env.VITE_BACKEND_URL+"/api/products/"+productId,productData,{
+            
+            headers: {
+                Authorization: "Bearer " + token}
+
+        }).then(
+            (res)=>{
+                console.log("Product added successfully")
+                console.log(res.data)
+                toast.success("Product added successfully")
+                navigate("/admin/products")
+            }).catch(
+                (error)=>{
+            console.error("error adding products"+error)
+            toast.error("error adding products")
+            })
+    }
+
+    return(
+        <div className="w-full h-full flex items-center justify-center">
+            <div className="w-[600px] border-[2px] rounded-[15px] p-[40px] flex flex-wrap justify-between">
+                    <div className="w-[200px] flex flex-col gap-[5px]">
+                        <label htmlFor="" className="text-sm font-semibold">Product Id</label>
+                        <input disabled type="text" value={productId} onChange={(e)=>setProductId(e.target.value)} className="w-full border-[1px] h-[40px] rounded-md" />
+                    </div>
+
+                    <div className="w-[300px] flex flex-col gap-[5px]">
+                        <label htmlFor="" className="text-sm font-semibold">Product Name</label>
+                        <input type="text" value={name} onChange={(e)=>setName(e.target.value)} className="w-full border-[1px] h-[40px] rounded-md" />
+                    </div>
+
+                    <div className="w-[500px] flex flex-col gap-[5px]">
+                        <label htmlFor="" className="text-sm font-semibold">Alternative Names</label>
+                        <input type="text" value={altNames} onChange={(e)=>setAltNames(e.target.value)} className="w-full border-[1px] h-[40px] rounded-md" />
+                    </div>
+
+                    <div className="w-[200px] flex flex-col gap-[5px]">
+                        <label htmlFor="" className="text-sm font-semibold">Labelled Price</label>
+                        <input type="number" value={labelledPrice} onChange={(e)=>setLabelledPrice(e.target.value)} className="w-full border-[1px] h-[40px] rounded-md" />
+                    </div>
+
+                    <div className="w-[200px] flex flex-col gap-[5px]">
+                        <label htmlFor="" className="text-sm font-semibold">Price</label>
+                        <input type="number" value={price} onChange={(e)=>setPrice(e.target.value)} className="w-full border-[1px] h-[40px] rounded-md" />
+                    </div>
+
+                    <div className="w-[500px] flex flex-col gap-[5px]">
+                        <label htmlFor="" className="text-sm font-semibold">Images</label>
+                        <input multiple type="file" onChange={(e)=>{setImage(e.target.files)}} className="w-full border-[1px] h-[40px] rounded-md" />
+                    </div>
+
+                    <div className="w-[500px] flex flex-col gap-[5px]">
+                        <label htmlFor="" className="text-sm font-semibold">Description</label>
+                        <textarea value={description} onChange={(e)=>setDescription(e.target.value)} className="w-full border-[1px] h-[100px] rounded-md"></textarea>
+                    </div>
+
+                    <div className="w-[200px] flex flex-col gap-[5px]">
+                        <label htmlFor="" className="text-sm font-semibold">Stock</label>
+                        <input type="number" value={stock} onChange={(e)=>setStock(e.target.value)} className="w-full border-[1px] h-[40px] rounded-md" />
+                    </div>
+
+                     <div className="w-[200px] flex flex-col gap-[5px]">
+                        <label htmlFor="" className="text-sm font-semibold">Is Available</label>
+                        <select value={isAvailable} onChange={(e)=>setIsAvailable(e.target.value)} className="w-full border-[1px] h-[40px] rounded-md">
+                            <option value={true}>Available</option>
+                            <option value={false}> Not Available</option>
+                        </select>
+                    </div>
+
+                    <div className="w-[200px] flex flex-col gap-[5px]">
+                        <label htmlFor="" className="text-sm font-semibold">Category</label>
+                        <select value={category} onChange={(e)=>setCategory(e.target.value)} className="w-full border-[1px] h-[40px] rounded-md">
+                            <option value="Cream">Cream</option>
+                            <option value="Face Wash">Face Wash</option>
+                            <option value="Soap">Soap</option>
+                            <option value="Fragrance">Fragrance</option>
+                        </select>
+                    </div>
+
+                    <div className="w-full flex justify-center flex-row gap-5 py-[25px]">
+                            <Link to="/admin/products" className="w-[200px] h-[50px] bg-white text-black border-[1px] rounded-md flex justify-center items-center">Cancel</Link>
+
+                            <button onClick={handleSubmit} className="w-[200px] h-[50px] bg-black text-white rounded-md flex justify-center items-center">Update Product</button>
+                    </div>
+
+            </div>
+
+        </div>
+    )
+}
