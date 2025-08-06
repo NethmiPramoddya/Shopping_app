@@ -49,7 +49,7 @@ import { isAdmin } from "./userController.js";
             const products = await Product.find({isAvailable:true});
             return res.json(products);
         }
-    }catch(Error){
+    }catch(error){
         console.error("Error fetching products:", error);
         return res.status(500).json({message: "Failed to fetch products"});
     }
