@@ -1,4 +1,4 @@
-import Order from "../models/order";
+import Order from "../models/order.js";
 
 export async function createOrder(req, res) {
     if(req.user==null){
@@ -7,4 +7,36 @@ export async function createOrder(req, res) {
     }
 
     //CBC00202
+    // CBC00202 - manually me widiyata order ID eka apit generate krnnna wenwa, me sandaha anthima order eka hoyaganna awshya wenwa
+    //date:-1 means date eka phlata adu wena widiyt pelagaswanna , enam udma enn oni aluthenm daou orders 2025>2012
+    const latestOrder = await Order.find().sort({date:-1}).limit(1);
+
+    let orderId = "CBC00202";
+
+    if (latestOrder.length > 0 && latestOrder[0].orderId) {
+        // if old orders exist
+        console.log(latestOrder);
+        const lastOrderIdInString = latestOrder[0].orderId; // "CBC00635"
+        const lastOrderIdWithoutPrefix = lastOrderIdInString.replace("CBC", ""); // "00635"
+        const lastOrderIdInteger = parseInt(lastOrderIdWithoutPrefix, 10); // 635
+        const newOrderIdInteger = lastOrderIdInteger + 1; // 636
+        const newOrderIdWithoutPrefix = newOrderIdInteger.toString().padStart(5, '0'); // "00636"
+        orderId = "CBC" + newOrderIdWithoutPrefix; // "CBC00636"
+    }
+
+    const order = new Order({
+        orderId: orderId,
+        email: req.user.email,
+        name: req.user.firstName + " " + req.user.lastName,
+        address: req.body.address,
+        phone: req.body.phone,
+        items: []
+    });
+        const result = await order.save()
+
+        res.json({
+            message:"order created successfully",
+            result:result
+        })
+    
 }
