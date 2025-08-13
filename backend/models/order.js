@@ -66,6 +66,12 @@ const orderSchema = new mongoose.Schema(
         notes: {
             type: String,
             default: "No additional notes"
+        },
+
+        total:{
+            type:Number,
+            required:true,
+            default:0
         }
     }
 )
