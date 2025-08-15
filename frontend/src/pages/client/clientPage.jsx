@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import React from "react";
 import ProductsPage from "./productspage";
 import ProductOverviewPage from "./ProductOverviewPage";
+import Cart from "./Cart";
 
 export default function ClientPage() {
     return(
@@ -15,6 +16,7 @@ export default function ClientPage() {
                     <Route path="/reviews" element={<h1 className="text-2xl text-center">Reviews Page</h1>} />
                     <Route path="/about-us" element={<h1 className="text-2xl text-center">About Us Page</h1>} />
                     <Route path="/contact" element={<h1 className="text-2xl text-center">Contact Us Page</h1>} />
+                    <Route path="/cart" element={<Cart />} />
                     <Route path="/overview/:productId" element={<ProductOverviewPage />} />
                     <Route path="/*" element={<h1 className="text-2xl text-center">404 not found</h1>} />
                 </Routes>

@@ -3,6 +3,8 @@ import React, { useState,useEffect} from 'react'
 import { useParams } from 'react-router-dom'
 import Loader from '../../components/loader';
 import ImageSlider from '../../components/ImageSlider';
+import { addToCart, getCart } from '../../utils/cart';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function ProductOverviewPage() {
     const params = useParams();
@@ -49,7 +51,14 @@ export default function ProductOverviewPage() {
 
               <div className='w-full flex flex-row mt-[20px] justify-center items-center gap-[10px]'>
                 <button className='w-[200px] h-[50px] cursor-pointer rounded-xl shadow-zxl text-white bg-blue-800 border-[3px] border-blue-900 hover:bg-white hover:text-blue-900'>Buy Now</button>
-                <button className='w-[200px] h-[50px] cursor-pointer rounded-xl shadow-zxl text-white bg-blue-500 border-[3px] border-blue-600 hover:bg-white hover:text-blue-600'>Add to Cart</button>
+                <button className='w-[200px] h-[50px] cursor-pointer rounded-xl shadow-zxl text-white bg-blue-500 border-[3px] border-blue-600 hover:bg-white hover:text-blue-600' onClick={
+                  ()=>
+                  {
+                    addToCart(product,1)
+                    toast.success("Product added to the cart")
+                    console.log(getCart())
+                    
+                  }}>Add to Cart</button>
               </div>
 
             </div>
