@@ -103,16 +103,26 @@ export function addToCart(product, qty){
     }else{
         // Update the quantity of the existing product
          const newQty = cart[existingProductIndex].quantity + qty;
-         if (newQty<=0){
-            const newCart = cart.filter((item, index)=>{
-                return index!== existingProductIndex
-            })
-            localStorage.setItem("cart", JSON.stringify(newCart))
-         }else{
-            cart[existingProductIndex].quantity = newQty
-            localStorage.setItem("cart", JSON.stringify(cart))
+         if (newQty <= 0) {
+            const newCart = cart.filter((_item, index) => {
+                return index !== existingProductIndex;
+            });
+            localStorage.setItem("cart", JSON.stringify(newCart));
+            return; // Exit the function after removing the item
+         } else {
+            cart[existingProductIndex].quantity = newQty;
+            localStorage.setItem("cart", JSON.stringify(cart));
          }
     }
     // Save the updated cart back to localStorage
     localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+export function getTotal(){
+    const cart= getCart()
+    let total =0;
+    cart.forEach((item)=>{
+        total+=item.quantity*item.price
+    })
+    return total;
 }
