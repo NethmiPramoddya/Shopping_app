@@ -48,7 +48,7 @@ export async function createOrder(req, res) {
             //         },
 
             if(product == null){
-                res.status(400).json({message: "invalid product id: " + item.productId})
+                return res.status(400).json({message: "invalid product id: " + item.productId})
             }
 
             items[i] ={

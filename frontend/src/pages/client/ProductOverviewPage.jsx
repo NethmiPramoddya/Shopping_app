@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState,useEffect} from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Loader from '../../components/loader';
 import ImageSlider from '../../components/ImageSlider';
 import { addToCart, getCart } from '../../utils/cart';
@@ -10,6 +10,7 @@ export default function ProductOverviewPage() {
     const params = useParams();
     const[product, setProduct] =useState(null);
     const[status, setStatus] = useState("loading"); // loading, success, error
+    const navigate = useNavigate();
 
     // Fetch product details using params.productId
     useEffect(
@@ -50,7 +51,18 @@ export default function ProductOverviewPage() {
               </div>
 
               <div className='w-full flex flex-row mt-[20px] justify-center items-center gap-[10px]'>
-                <button className='w-[200px] h-[50px] cursor-pointer rounded-xl shadow-zxl text-white bg-blue-800 border-[3px] border-blue-900 hover:bg-white hover:text-blue-900'>Buy Now</button>
+                <button className='w-[200px] h-[50px] cursor-pointer rounded-xl shadow-zxl text-white bg-blue-800 border-[3px] border-blue-900 hover:bg-white hover:text-blue-900' onClick={
+                  ()=>{
+                    navigate('/checkout', { state: { items: [
+                      { productId: product.productId,
+                        quantity: 1,
+                        name: product.name,
+                        image: product.image[0],
+                        price: product.price
+                      }
+                    ] } })
+                  }
+                }>Buy Now</button>
                 <button className='w-[200px] h-[50px] cursor-pointer rounded-xl shadow-zxl text-white bg-blue-500 border-[3px] border-blue-600 hover:bg-white hover:text-blue-600' onClick={
                   ()=>
                   {
