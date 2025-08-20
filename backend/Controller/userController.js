@@ -77,6 +77,15 @@ export function loginUser(req, res){
     )
 
 }
+// ape backend ekata token eka ewala ethanina userge wisthara tika gnna (backend ekata awilla code ea decode krgnn eka) // token ekn usege nama athulu wisthara ganima
+export function getUser(req,res){
+    if(req.user == null){
+        res.status(404).json({message:"user not found"})
+    }
+    else{
+        res.json(req.user)
+    }
+}
 
 export function isAdmin(req){
     if(req.user == null){

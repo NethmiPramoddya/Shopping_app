@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaTrashAlt } from "react-icons/fa";
 import {useLocation, useNavigate} from 'react-router-dom'
 import toast from 'react-hot-toast';
@@ -8,6 +8,39 @@ export default function CheckoutPage() {
     const location = useLocation()
     const navigate = useNavigate()
     const [cart, setCart] = useState(location.state?.items || [])
+    //checkout page eka load weddi backend ekata call ekk gighilla user kawda kiyala hoyagann ekai wenna oni
+
+    const [user, setUser] = useState(null) //userge wisthara grab krgattata psse userge wisthara store krala thiyaganna eka
+    const [name, setName] = useState("")
+    const [address, setAddress] = useState("")
+    const [phone, setPhone] = useState("")
+
+    useEffect(()=>{
+      const token =localStorage.getItem('token')
+      if(token==null){
+        toast.error("Please login to checkout")
+        navigate('/login')
+        return
+      }else{
+        axios.get(import.meta.env.VITE_BACKEND_URL+"/api/users/",{
+            headers:{
+                Authorization:`Bearer ${token}`
+            },
+        }).then(
+            (res)=>{
+                setUser(res.data)
+                setName(res.data.firstName + " " + res.data.lastName)
+                console.log(user)
+            }
+        ).catch(
+            (err)=>{
+                console.error(err)
+                toast.error("failed to fetch user")
+                navigate("/login")
+            }
+        )
+      }
+    },[])
 
     if(location.state?.items==null){
         toast.error("pls select items to checkout")
@@ -30,9 +63,14 @@ export default function CheckoutPage() {
             return;
         }
 
+        if(name==""|| address==""|| phone==""){
+            toast.error("pls fill all the feilds")
+            return;
+        }
+
         const order ={
-            address: "df",
-            phone:"df",
+            address: address,
+            phone:phone,
             items:[]
         }
 
@@ -110,6 +148,16 @@ export default function CheckoutPage() {
          <span className=" font-semibold text-2xl">Total:{getTotal().toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
          <button className='absolute left-[10px] w-[150px] h-[50px] bg-blue-500 cursor-pointer rounded-xl text-white border-[2px] hover:bg-white hover:text-blue-500' onClick={placeOrder}>Place Order</button>
       </div>
+
+        <div className='w-[800px] h-[100px] m-[10px] p-[10px] flex flex-row shadow-2xl items-center justify-center relative'>
+         <input type="text" name="" className='w-[200px] h-[40px] border border-gray-300 rounded-lg p-[10px] mr-[10px]' onChange={(e)=>{setName(e.target.value)}} value={name} id="" placeholder='Enter your name' />
+
+         <input type="text" name="" className='w-[200px] h-[40px] border border-gray-300 rounded-lg p-[10px] mr-[10px]' onChange={(e)=>{setAddress(e.target.value)}} value={address} id="" placeholder='Enter your address' />
+
+         <input type="text" name="" className='w-[200px] h-[40px] border border-gray-300 rounded-lg p-[10px] mr-[10px]' onChange={(e)=>{setPhone(e.target.value)}} value={phone} id="" placeholder='Enter your phone number' />
+      </div>
+
+
     </div>
     
 
