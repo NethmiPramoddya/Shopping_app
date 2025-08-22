@@ -1,5 +1,6 @@
 import Order from "../models/order.js";
 import Product from "../models/product.js";
+import { isAdmin } from "./userController.js";
 
 export async function createOrder(req, res) {
     try{
@@ -119,5 +120,33 @@ export async function getOrder(req,res){
     }catch(error){
         console.error("error fetching orders", error);
         res.status(500).json({message:"failed to fetch orders"})
+    }
+}
+
+export async function updateOrder(req,res){
+    if(isAdmin(req)){
+        const orderId = req.params.orderId
+        const { status, notes } = req.body 
+
+        Order.findOneAndUpdate(
+           { orderId:orderId},
+           {status:status, notes:notes},
+           {new:true}
+        ).then((updateOrder)=>{
+            if(updateOrder){
+                res.json({
+                    message:"order updated successfully",
+                    order:updateOrder
+                })
+            }else{
+                req.status(404).json({message:"order not found"})
+            }
+        }).catch((err)=>{
+            console.error("error updating order", err)
+            res.status(500).json({message:"failed to update order"})
+    })
+
+    }else{
+        res.status(403).json({message:"you are not autharized to update orders"})
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Paginator(props) {
-    const {currentPage,setCurrentPage, totalPages, setPage, limit, setLimit, setLoading}=props;
+    const {currentPage,setCurrentPage, totalPages, setPage, limit, setLimit, setLoading}=props;//props is a json and what in here done is deconstructing the props json
   return (
     <div className='w-full h-[50px] flex flex-row justify-center items-center gap-[20px]'>
         <select name="" id="" className='w-[100px] h-[40px] border border-gray-300 rounded-md p-[10px]' value={currentPage} onChange={(e)=>{
