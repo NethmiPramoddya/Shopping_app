@@ -50,7 +50,7 @@ export default function OrdersPageAdmin() {
             {
                 orders.map((order)=>{
                     return(
-                    <tr key={order.orderId} className='border-b-[1px] hover:bg-blue-500 hover:text-white cursor-pointer' onClick={()=>{
+                    <tr key={order.orderId} className='border-b-[1px] hover:bg-accent hover:text-white cursor-pointer' onClick={()=>{
                         setOrderStatus(order.status)
                         setOrderNotes(order.notes)
                         setClickOrder(order)
@@ -79,7 +79,7 @@ export default function OrdersPageAdmin() {
       <div className="w-[650px] max-h-[90vh] bg-white rounded-xl shadow-lg relative p-6">
 
         {
-            (orderStatus!==clickOrder.status || orderNotes!==clickOrder.notes)&&<button className='absolute w-[120px] h-[40px] top-2 right-2 bg-blue-500 text-white rounded-lg cursor-pointer'
+            (orderStatus!==clickOrder.status || orderNotes!==clickOrder.notes)&&<button className='absolute w-[120px] h-[40px] top-2 right-2 bg-accent text-white rounded-lg cursor-pointer'
             onClick={async()=>{
                 setPopupVisible(false)
                 try{

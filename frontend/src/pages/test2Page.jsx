@@ -57,7 +57,7 @@ export default function Test2Page() {
         }
       }/>
 
-      <button onClick={handleUpload} className='bg-blue-500 text-white px-4 py-2 rounded-md cursor-pointer'>Upload</button>
+      <button onClick={handleUpload} className='bg-accent text-white px-4 py-2 rounded-md cursor-pointer'>Upload</button>
     </div>
   )
 }

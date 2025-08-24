@@ -30,7 +30,7 @@ export default function Cart() {
                             <p className=" font-semibold text-gray-600">{item.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
                         </div>
                         <div className="w-[190px] h-full flex flex-row justify-center items-center">
-                            <button className='flex justify-center items-center w-[30px] text-white rounded-xl bg-blue-600 cursor-pointer hover:bg-blue-700' onClick={() => {
+                            <button className='flex justify-center items-center w-[30px] text-white rounded-xl bg-accent cursor-pointer hover:bg-blue-600' onClick={() => {
                                 let updatedCart;
                                 if (item.quantity > 1) {
                                     updatedCart = addToCart(item, -1);
@@ -41,7 +41,7 @@ export default function Cart() {
                                 setCart(updatedCart || getCart());
                             }}>-</button>
                             <span className="text-sm mx-[10px] text-gray-500">Quantity: {item.quantity}</span>
-                            <button className='flex justify-center items-center w-[30px] text-white rounded-xl bg-blue-600 cursor-pointer hover:bg-blue-700' onClick={()=>{
+                            <button className='flex justify-center items-center w-[30px] text-white rounded-xl bg-accent cursor-pointer hover:bg-blue-600' onClick={()=>{
                                 addToCart(item, 1)
                                 setCart(getCart())
                             }}>+</button>
@@ -60,7 +60,7 @@ export default function Cart() {
       )}
       <div className='w-[800px] h-[100px] m-[10px] p-[10px] flex flex-row shadow-2xl items-center justify-end relative'>
          <span className=" font-semibold text-2xl">Total:{getTotal().toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
-         <button className='absolute left-[10px] w-[150px] h-[50px] bg-blue-500 cursor-pointer rounded-xl text-white border-[2px] hover:bg-white hover:text-blue-500' onClick={()=>{navigate('/checkout', {state:{items:cart}})}}>Checkout</button>
+         <button className='absolute left-[10px] w-[150px] h-[50px] bg-accent cursor-pointer rounded-xl text-white border-[2px] hover:bg-white hover:text-accent' onClick={()=>{navigate('/checkout', {state:{items:cart}})}}>Checkout</button>
       </div>
     </div>
     

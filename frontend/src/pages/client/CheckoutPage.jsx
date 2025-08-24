@@ -112,7 +112,7 @@ export default function CheckoutPage() {
                             <p className=" font-semibold text-gray-600">{item.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
                         </div>
                         <div className="w-[190px] h-full flex flex-row justify-center items-center">
-                            <button className='flex justify-center items-center w-[30px] text-white rounded-xl bg-blue-600 cursor-pointer hover:bg-blue-700' onClick={()=>{
+                            <button className='flex justify-center items-center w-[30px] text-white rounded-xl bg-accent cursor-pointer hover:bg-accent' onClick={()=>{
                                 const newCart = [...cart] // cart array copy
                                 newCart[index].quantity-= 1;
                                 if(newCart[index].quantity<=0){
@@ -121,7 +121,7 @@ export default function CheckoutPage() {
                                 setCart(newCart)
                             }}>-</button>
                             <span className="text-sm mx-[10px] text-gray-500">Quantity: {item.quantity}</span>
-                            <button className='flex justify-center items-center w-[30px] text-white rounded-xl bg-blue-600 cursor-pointer hover:bg-blue-700' onClick={()=>{
+                            <button className='flex justify-center items-center w-[30px] text-white rounded-xl bg-accent cursor-pointer hover:bg-accent' onClick={()=>{
                                 const newCart = [...cart] // cart array copy
                                 newCart[index].quantity+= 1;
                                 setCart(newCart)
@@ -146,7 +146,7 @@ export default function CheckoutPage() {
       )}
       <div className='w-[800px] h-[100px] m-[10px] p-[10px] flex flex-row shadow-2xl items-center justify-end relative'>
          <span className=" font-semibold text-2xl">Total:{getTotal().toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
-         <button className='absolute left-[10px] w-[150px] h-[50px] bg-blue-500 cursor-pointer rounded-xl text-white border-[2px] hover:bg-white hover:text-blue-500' onClick={placeOrder}>Place Order</button>
+         <button className='absolute left-[10px] w-[150px] h-[50px] bg-accent cursor-pointer rounded-xl text-white border-[2px] hover:bg-white hover:text-accent' onClick={placeOrder}>Place Order</button>
       </div>
 
         <div className='w-[800px] h-[100px] m-[10px] p-[10px] flex flex-row shadow-2xl items-center justify-center relative'>

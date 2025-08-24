@@ -154,7 +154,7 @@ export default function ProductsAdminPage(){
                                     }  /></button>
                                     <button><MdEdit onClick={()=>navigate("/admin/updateProduct",{
                                         state:product
-                                    })} className="text-white bg-blue-500 rounded-full text-3xl p-2 cursor-pointer"/></button>
+                                    })} className="text-white bg-accent rounded-full text-3xl p-2 cursor-pointer"/></button>
                                 </td>
                                 </tr>
                             )

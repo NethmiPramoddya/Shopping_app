@@ -15,10 +15,10 @@ export default function TestPage(){
             <div className="w-[400px] h-[400px] bg-white flex justify-center items-center flex-col">
                 <div className="text-5xl font-bold">{count}</div>
                     <div className="flex gap-4">
-                        <button onClick={decrement} className="bg-blue-700 text-white text-3xl w-20 h-20 rounded-[25%] hover:bg-blue-800 transition">
+                        <button onClick={decrement} className="bg-accent text-white text-3xl w-20 h-20 rounded-[25%] hover:bg-blue-800 transition">
                                 -
                         </button>
-                        <button onClick={increment} className="bg-blue-700 text-white text-3xl w-20 h-20 rounded-[25%] hover:bg-blue-800 transition">
+                        <button onClick={increment} className="bg-accent text-white text-3xl w-20 h-20 rounded-[25%] hover:bg-blue-800 transition">
                                 +
                         </button>
                     </div>

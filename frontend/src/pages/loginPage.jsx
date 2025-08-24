@@ -49,9 +49,9 @@ export default function LoginPage() {
           <input type="password" onChange={(e)=>{setPassword(e.target.value)}} className="w-[350px] border border-white rounded-xl h-[40px]" />
         </div>
 
-        <button onClick={login} className="w-[350px] h-[40px] rounded-xl bg-blue-500 text-white text-lg mt-5 hover:bg-blue-600 transition-all duration-300">Login</button>
+        <button onClick={login} className="w-[350px] h-[40px] rounded-xl bg-accent text-white text-lg mt-5 hover:bg-accent transition-all duration-300">Login</button>
 
-          <p>Don't have an account? <Link to="/register" className="text-blue-500">Sign Up</Link> from here</p>
+          <p>Don't have an account? <Link to="/register" className="text-accent">Sign Up</Link> from here</p>
 
 
       </div>
