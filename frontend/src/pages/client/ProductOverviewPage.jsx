@@ -33,13 +33,14 @@ export default function ProductOverviewPage() {
       }
       {
         status === "success" && product && (
-          <div className='w-full h-full flex flex-col'>
+          <div className='w-full md:w-1/2 h-full flex flex-col md:flex-row md:gap-[300px]'>
+            <h1 className='text-2xl font-bold my-4 text-center md:hidden'>{product.name} <span className='font-light'>{product.altNames.join(" | ")}</span></h1>
             <div className='w-[full] h-full flex flex-col justify-center items-center'>
                     <ImageSlider images={product.image}/>
             </div>
-            <div className='w-full h-full flex flex-col items-center pt-[70px]'>
-              <h1 className='text-2xl font-bold'>{product.name} <span className='font-light'>{product.altNames.join(" | ")}</span></h1>
-              <p className='text-lg mt-[20px]'>{product.description}</p>
+            <div className='w-full md:w-1/2 h-full flex flex-col md:pt-[110px] items-center gap-[20px]'>
+              <h1 className='text-2xl font-bold hidden md:block'>{product.name} <span className='font-light'>{product.altNames.join(" | ")}</span></h1>
+              <p className='text-lg p-2'>{product.description}</p>
               <div className='w-full flex flex-col items-center mt-[20px]'>
                 {
                   product.labelledPrice > product.price ? 
