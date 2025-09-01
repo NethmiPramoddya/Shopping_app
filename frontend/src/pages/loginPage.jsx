@@ -2,11 +2,30 @@ import { useState } from "react"
 import {Link, useNavigate} from "react-router-dom"
 import axios from "axios"
 import toast, { Toaster } from 'react-hot-toast';
+import { useGoogleLogin } from '@react-oauth/google';
+
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
+  const googleLogin = useGoogleLogin({
+  onSuccess: (tokenResponse) => {
+    console.log("Google Login Success:", tokenResponse);
+    // Example: save token in localStorage
+    localStorage.setItem("google_token", tokenResponse.access_token);
+
+    // you can fetch profile data using the token later
+    toast.success("Google Login Successful");
+    navigate("/");
+  },
+  onError: () => {
+    console.log("Google Login Failed");
+    toast.error("Google Login Failed");
+  },
+});
+
 
  function login(){
       axios.post(import.meta.env.VITE_BACKEND_URL+"/api/users/login", {
@@ -50,6 +69,8 @@ export default function LoginPage() {
         </div>
 
         <button onClick={login} className="w-[350px] h-[40px] rounded-xl bg-accent text-white text-lg mt-5 hover:bg-accent transition-all duration-300">Login</button>
+
+        <button onClick={googleLogin} className="w-[350px] h-[40px] rounded-xl bg-accent text-white text-lg mt-5 hover:bg-accent transition-all duration-300">Google Login</button>
 
           <p>Don't have an account? <Link to="/register" className="text-accent">Sign Up</Link> from here</p>
 

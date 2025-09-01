@@ -11,13 +11,14 @@ import { Toaster } from 'react-hot-toast';
 import Test2Page from './pages/test2Page'
 import Test3 from './pages/test3'
 import ClientPage from './pages/client/clientPage'
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function App() {
   
-
   return (
     <>
     <BrowserRouter>
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <div className='w-full h-screen flex justify-center items-center bg-primary text-secondary'>
         <Toaster position='top-right' />
         <Routes path ="/">
@@ -39,6 +40,7 @@ function App() {
             image ="https://picsum.photos/id/1/200/300"/> */}
             </Routes>
       </div>
+         </GoogleOAuthProvider>
       </BrowserRouter>
     </>
   )
