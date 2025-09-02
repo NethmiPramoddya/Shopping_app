@@ -4,26 +4,31 @@ import axios from "axios"
 import toast, { Toaster } from 'react-hot-toast';
 import { useGoogleLogin } from '@react-oauth/google';
 
-
-
 export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
   const googleLogin = useGoogleLogin({
-  onSuccess: (tokenResponse) => {
-    console.log("Google Login Success:", tokenResponse);
-    // Example: save token in localStorage
-    localStorage.setItem("google_token", tokenResponse.access_token);
-
-    // you can fetch profile data using the token later
-    toast.success("Google Login Successful");
-    navigate("/");
-  },
-  onError: () => {
-    console.log("Google Login Failed");
-    toast.error("Google Login Failed");
-  },
+  onSuccess: (response) => {
+    console.log("Google Login Success:", response);
+    axios.post(import.meta.env.VITE_BACKEND_URL+"/api/users/google-login",{
+        token: response.access_token
+    }).then(
+        (response)=>{
+            console.log(response.data)
+            localStorage.setItem("token", response.data.token)
+            toast.success("Login Successfull")
+            if(response.data.role == "admin"){
+              navigate("/admin")
+            }else if(response.data.role == "user"){
+              navigate("/")
+            }
+        }
+       
+    ).catch(
+      ()=>{toast.error("Google Login Failed")}
+    )
+  }
 });
 
 

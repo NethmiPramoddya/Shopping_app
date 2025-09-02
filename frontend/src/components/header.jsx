@@ -7,7 +7,7 @@ import { IoStorefrontOutline } from "react-icons/io5";
 
 export default function Header() {
   const navigate = useNavigate()
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
   return (
     <header className='w-full h-[100px] bg-accent flex justify-center items-center relative'>
       {

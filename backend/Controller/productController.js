@@ -123,3 +123,20 @@ import { isAdmin } from "./userController.js";
         return res.status(500).json({message:"Failed to fetch the product"})
     }
  }
+
+ export async function searchProducts(req,res){
+    const query = req.params.query
+
+    try{
+        const products = await Product.find({
+            $or:[
+            {name: { $regex: query, $options: "i" }},
+            {altNames: { $elemMatch: { $regex: query, $options: "i" } }},
+            ], 
+            isAvailable: true
+        })
+        res.json(products)
+    }catch(error){
+        res.status(500).json({message:"Failed to search products"})
+    }
+ }
