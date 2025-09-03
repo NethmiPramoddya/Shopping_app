@@ -1,10 +1,22 @@
 import User from "../models/user.js";
+import OTP from "../models/otp.js";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import axios from "axios";
+import nodemailer from "nodemailer";
 
 dotenv.config()
+
+const transporter = nodemailer.createTransport({
+   host: "smtp.gmail.com",
+   port: 587,
+   secure: false,
+   auth: {
+       user: process.env.APP_EMAIL,
+       pass: process.env.APP_PASSWORD
+   }
+});
 
 export function createUser(req,res){
 
@@ -168,6 +180,88 @@ export async function googleLogin(req,res){
     }catch(err){
         res.status(500).json({
             message: "Google login failed",
+            error: err.message
+        })
+    }
+}
+
+export async function sendOTP(req,res){
+    const email = req.body.email
+    //random number between 111111 and 999999
+    const otpcode = Math.floor(100000 + Math.random() * 900000)
+
+    //delete all otps from email
+    try{
+        await OTP.deleteMany({ email: email })
+        const newOTP = new OTP({
+            email: email,
+            otp: otpcode
+        })
+        await newOTP.save()
+        res.json({
+            message: "OTP sent successfully"
+        })
+
+        const message = {
+            from: process.env.APP_EMAIL,
+            to: email,
+            subject: "Your OTP Code",
+            text: `Your OTP code is ${otpcode}`
+        }
+
+        transporter.sendMail(message, (error, info) => {
+            if (error) {
+                return res.status(500).json({
+                    message: "Failed to send OTP",
+                    error: error.message
+                })
+            }
+            else{
+                console.log("OTP email sent: " + info.response)
+                res.json({
+                    message: "OTP sent successfully"
+                })
+            }
+        })
+    }catch{
+        res.status(500).json({
+            message: "Failed to send OTP"
+        })
+    }
+
+    
+}
+
+export async function resetPassword(req,res){
+    const { email, otp, newPassword } = req.body
+
+    try{
+        const validOtp = await OTP.findOne({ email: email, otp: otp })
+
+        if(!validOtp){
+            return res.status(400).json({
+                message: "Invalid OTP"
+            })
+        }
+
+        const user = await User.findOne({ email: email })
+
+        if(!user){
+            return res.status(404).json({
+                message: "User not found"
+            })
+        }
+        //hash new password
+        const hashedPassword = bcrypt.hashSync(newPassword, 10)
+        await User.updateOne({ email: email }, { password: hashedPassword })
+        await OTP.deleteMany({ email: email })
+
+        res.json({
+            message: "Password reset successfully"
+        })
+    }catch(err){
+        res.status(500).json({
+            message: "Failed to reset password",
             error: err.message
         })
     }

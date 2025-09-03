@@ -78,6 +78,7 @@ export default function LoginPage() {
         <button onClick={googleLogin} className="w-[350px] h-[40px] rounded-xl bg-accent text-white text-lg mt-5 hover:bg-accent transition-all duration-300">Google Login</button>
 
           <p>Don't have an account? <Link to="/register" className="text-accent">Sign Up</Link> from here</p>
+          <p>Forget Password? <Link to="/forget" className="text-accent">Reset Password</Link> from here</p>
 
 
       </div>
