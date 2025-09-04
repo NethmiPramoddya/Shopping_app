@@ -8,6 +8,7 @@ import { IoStorefrontOutline } from "react-icons/io5";
 export default function Header() {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
+  const token = localStorage.getItem("token")
   return (
     <header className='w-full h-[100px] bg-accent flex justify-center items-center relative'>
       {
@@ -68,7 +69,14 @@ export default function Header() {
         <Link to='/reviews' className='text-white text-xl ml-4 '>Reviews</Link>
         <Link to='/about-us' className='text-white text-xl ml-4 '>About Us</Link>
         <Link to='/contact' className='text-white text-xl ml-4 '>Contact Us</Link>
-        <Link to='/cart' className='absolute right-[80px]'><IoCartOutline className='text-white text-3xl ml-4' /></Link>
+        <Link to='/cart' className='absolute right-[250px]'><IoCartOutline className='text-white text-3xl ml-4' /></Link>
+
+        {
+          token!==null && <button onClick={()=>{
+            localStorage.removeItem("token")
+            navigate("/login")
+          }} className='absolute right-[80px] text-white px-4  text-xl ml-4 cursor-pointer'>Logout</button>
+        }
 
       </div>
     </header>
