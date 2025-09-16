@@ -56,7 +56,7 @@ export default function AdminPage() {
               <Link className="flex flex-row h-[60px] w-full border p-[20px] items-center text-xl gap-[25px]" to="/admin/settings"><IoSettingsSharp />Settings</Link>
 
         </div>
-        <div className="w-[calc(100%-300px)] h-full bg-amber-100">
+        <div className="w-[calc(100%-300px)] h-full bg-primary">
           <Routes path="/*">
           <Route path = "/" element={<h1>Dashboard</h1>}/>
           <Route path = "/products" element={<ProductsAdminPage/>}/>

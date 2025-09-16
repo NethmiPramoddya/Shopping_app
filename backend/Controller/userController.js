@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import axios from "axios";
 import nodemailer from "nodemailer";
+import ContactUs from "../models/contactUs.js";
 
 dotenv.config()
 
@@ -262,6 +263,21 @@ export async function resetPassword(req,res){
     }catch(err){
         res.status(500).json({
             message: "Failed to reset password",
+            error: err.message
+        })
+    }
+}
+
+export async function contactUs(req, res){
+    try{
+    const {name, email, message} = req.body;
+    const contact = new ContactUs({name, email, message})
+    contact.save()
+
+    res.status(201).json({ success: true, message: "Message sent!" });
+    }catch(err){
+        res.status(500).json({
+            message: "Failed to send message",
             error: err.message
         })
     }
