@@ -27,32 +27,45 @@ export default function ProductOverviewPage() {
         }
     },[status])
   return (
-    <div className='w-full h-full flex justify-center items-center'>
+    <div className='w-full h-full flex justify-center items-center p-4'>
       {
         status === "loading" && <Loader/>
       }
       {
         status === "success" && product && (
-          <div className='w-full md:w-1/2 h-full flex flex-col md:flex-row md:gap-[300px]'>
-            <h1 className='text-2xl font-bold my-4 text-center md:hidden'>{product.name} <span className='font-light'>{product.altNames.join(" | ")}</span></h1>
-            <div className='w-[full] h-full flex flex-col justify-center items-center'>
-                    <ImageSlider images={product.image}/>
+          <div className='w-full max-w-6xl h-full flex flex-col md:flex-row md:gap-12 lg:gap-20'>
+            <h1 className='text-2xl font-bold my-4 text-center md:hidden'>
+              {product.name} <span className='font-light'>{product.altNames.join(" | ")}</span>
+            </h1>
+            <div className='w-full md:w-1/2 h-full mt-20 flex flex-col justify-center items-center'>
+              <ImageSlider images={product.image}/>
             </div>
-            <div className='w-full md:w-1/2 h-full flex flex-col md:pt-[110px] items-center gap-[20px]'>
-              <h1 className='text-2xl font-bold hidden md:block'>{product.name} <span className='font-light'>{product.altNames.join(" | ")}</span></h1>
-              <p className='text-lg p-2'>{product.description}</p>
-              <div className='w-full flex flex-col items-center mt-[20px]'>
+            <div className='w-full md:w-1/2 h-full flex flex-col md:pt-10 lg:pt-20 items-center gap-6 px-2'>
+              <h1 className='text-2xl font-bold hidden md:block text-center'>
+                {product.name} <span className='font-light'>{product.altNames.join(" | ")}</span>
+              </h1>
+              <p className='text-base md:text-lg p-2 text-center md:text-left'>{product.description}</p>
+              <div className='w-full flex flex-col items-center mt-4'>
                 {
                   product.labelledPrice > product.price ? 
-                  <div> <span className='text-2xl font-semibold text-red-500 line-through mr-[20px]'>{product.labelledPrice.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
-                  <span className='text-2xl font-bold text-green-500'>{product.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+                  <div className='flex flex-wrap justify-center items-center gap-3'> 
+                    <span className='text-xl md:text-2xl font-semibold text-red-500 line-through'>
+                      {product.labelledPrice.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                    </span>
+                    <span className='text-2xl md:text-3xl font-bold text-green-500'>
+                      {product.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                    </span>
                   </div> : 
-                  <div> <span className='text-3xl font-bold text-green-500'>{product.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></div>
+                  <div> 
+                    <span className='text-2xl md:text-3xl font-bold text-green-500'>
+                      {product.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                    </span>
+                  </div>
                 }
               </div>
 
-              <div className='w-full flex flex-row mt-[20px] justify-center items-center gap-[10px]'>
-                <button className='w-[200px] h-[50px] cursor-pointer rounded-xl shadow-zxl text-white bg-blue-800 border-[3px] border-blue-900 hover:bg-white hover:text-blue-900' onClick={
+              <div className='w-full flex flex-col sm:flex-row mt-6 justify-center items-center gap-4'>
+                <button className='w-full sm:w-[200px] h-[50px] cursor-pointer rounded-xl shadow-zxl text-white bg-blue-800 border-[3px] border-blue-900 hover:bg-white hover:text-blue-900' onClick={
                   ()=>{
                     navigate('/checkout', { state: { items: [
                       { productId: product.productId,
@@ -64,7 +77,7 @@ export default function ProductOverviewPage() {
                     ] } })
                   }
                 }>Buy Now</button>
-                <button className='w-[200px] h-[50px] cursor-pointer rounded-xl shadow-zxl text-white bg-accent border-[3px] border-accent hover:bg-white hover:text-accent' onClick={
+                <button className='w-full sm:w-[200px] h-[50px] cursor-pointer rounded-xl shadow-zxl text-white bg-accent border-[3px] border-accent hover:bg-white hover:text-accent' onClick={
                   ()=>
                   {
                     addToCart(product,1)
