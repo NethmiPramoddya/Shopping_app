@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken'
 import productRouter from './router/productRoter.js';
 import dotenv from 'dotenv'
 import orderRouter from './router/orderRouter.js';
+import reviewRouter from './router/reviewRouter.js';
 dotenv.config()
 
 const app = express();
@@ -54,6 +55,9 @@ mongoose.connect(connectionString).then(
 app.use("/api/users", userRouter)
 app.use("/api/products", productRouter)
 app.use("/api/orders", orderRouter)
+app.use("/api/reviews", reviewRouter)
+
+
 
 app.get("/",(req,res)=>{
     console.log(req);
