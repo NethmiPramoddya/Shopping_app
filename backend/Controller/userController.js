@@ -65,6 +65,7 @@ export function loginUser(req, res){
                 if(isPassowrdCorrect){
                     const token = jwt.sign(
                         {
+                            id: user._id,
                             email : user.email,
                             firstName : user.firstName,
                             lastName : user.lastName,
@@ -73,7 +74,8 @@ export function loginUser(req, res){
                             isEmailVerified : user.isEmailVerified,
                             image : user.image
                         },
-                        process.env.JWT_SECRET
+                        process.env.JWT_SECRET,
+                        { expiresIn: "7d" }
                     )
 
                     
@@ -128,6 +130,7 @@ export async function googleLogin(req,res){
         if(user!=null){
             const token = jwt.sign(
                 {
+                    id: user._id,
                     email: user.email,
                     firstName: user.firstName,
                     lastName: user.lastName,
@@ -160,6 +163,7 @@ export async function googleLogin(req,res){
 
             const token = jwt.sign(
                 {
+                    id: newUser._id,
                     email: newUser.email,
                     firstName: newUser.firstName,
                     lastName: newUser.lastName,

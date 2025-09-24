@@ -6,6 +6,8 @@ import ProductOverviewPage from "./ProductOverviewPage";
 import Cart from "./Cart";
 import CheckoutPage from "./CheckoutPage";
 import ContactUs from "../ContactUs";
+import ReviewForm from "../../components/ReviewForm";
+import Reviews from "./Reviews";
 
 export default function ClientPage() {
     return(
@@ -15,9 +17,10 @@ export default function ClientPage() {
                 <Routes path="/">
                     <Route path="/" element={<h1 className="text-2xl text-center">Welcome to Home page</h1>} />
                     <Route path="/products" element={<ProductsPage/>} />
-                    <Route path="/reviews" element={<h1 className="text-2xl text-center">Reviews Page</h1>} />
+                    <Route path="/reviews" element={<Reviews/>}/>
                     <Route path="/about-us" element={<h1 className="text-2xl text-center">About Us Page</h1>} />
                     <Route path="/contact" element={<ContactUs />} />
+                    <Route path="/postReview" element={<ReviewForm />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/checkout" element={<CheckoutPage />} />
                     <Route path="/overview/:productId" element={<ProductOverviewPage />} />
