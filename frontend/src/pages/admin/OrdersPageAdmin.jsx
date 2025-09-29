@@ -32,7 +32,7 @@ export default function OrdersPageAdmin() {
         }
     },[loading,page,limit])
   return (
-    <div className='w-full h-full flex flex-col justify-between'>
+    <div className='w-full flex flex-col justify-between'>
       <table className='w-full border-[3px]'>
         <thead>
             <tr>
