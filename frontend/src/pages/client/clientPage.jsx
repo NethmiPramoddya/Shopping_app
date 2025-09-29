@@ -8,6 +8,7 @@ import CheckoutPage from "./CheckoutPage";
 import ContactUs from "../ContactUs";
 import ReviewForm from "../../components/ReviewForm";
 import Reviews from "./Reviews";
+import  HomePage from "../homepage";
 
 export default function ClientPage() {
     return(
@@ -15,7 +16,7 @@ export default function ClientPage() {
             <Header/>
             <div className="w-full h-[calc(100%-100px)]">
                 <Routes path="/">
-                    <Route path="/" element={<h1 className="text-2xl text-center">Welcome to Home page</h1>} />
+                    <Route path="/" element={<HomePage/>} />
                     <Route path="/products" element={<ProductsPage/>} />
                     <Route path="/reviews" element={<Reviews/>}/>
                     <Route path="/about-us" element={<h1 className="text-2xl text-center">About Us Page</h1>} />

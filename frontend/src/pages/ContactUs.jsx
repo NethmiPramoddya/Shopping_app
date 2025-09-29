@@ -6,6 +6,7 @@ import { RxQuestionMarkCircled } from "react-icons/rx";
 import { FaRegClock } from "react-icons/fa6";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import toast from "react-hot-toast";
+import heroBg from "../assets/contact.jpg"
 
 export default function ContactUs() {
   const [name, setName] = useState("")
@@ -41,9 +42,13 @@ export default function ContactUs() {
   return (
     <>
     <div className="w-full min-h-screen bg-[#F8FAFC]">
-      <div className="w-full h-[300px] bg-accent flex flex-col items-center justify-items-center">
-        <h1 className="font-extrabold text-white text-5xl mt-10">Contact Us</h1>
-        <p className="text-white text-center text-xl mt-15">
+      <div
+                className="h-[500px] flex flex-col items-center justify-center bg-center bg-cover relative"
+                style={{ backgroundImage: `url(${heroBg})` }}
+              >
+                <div className="absolute inset-0 bg-black/40"></div>
+        <h1 className="font-extrabold text-white text-5xl mt-10 z-10">Contact Us</h1>
+        <p className="text-white text-center text-xl mt-15 z-10">
           We'd love to hear from you. Get in touch with our team for any questions,<br/> feedback, or support
         </p>
       </div>
