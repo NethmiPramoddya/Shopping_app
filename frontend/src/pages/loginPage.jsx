@@ -35,7 +35,7 @@ export default function LoginPage() {
  function login(){
       axios.post(import.meta.env.VITE_BACKEND_URL+"/api/users/login", {
       email: email,
-      password: password // ✅ Fixed: "password" is now spelled correctly
+      password: password 
 
     }).then((response)=>{
       console.log(response.data)

@@ -9,6 +9,7 @@ import ContactUs from "../ContactUs";
 import ReviewForm from "../../components/ReviewForm";
 import Reviews from "./Reviews";
 import  HomePage from "../homepage";
+import AboutUs from "../AboutUs";
 
 export default function ClientPage() {
     return(
@@ -19,7 +20,7 @@ export default function ClientPage() {
                     <Route path="/" element={<HomePage/>} />
                     <Route path="/products" element={<ProductsPage/>} />
                     <Route path="/reviews" element={<Reviews/>}/>
-                    <Route path="/about-us" element={<h1 className="text-2xl text-center">About Us Page</h1>} />
+                    <Route path="/about-us" element={<AboutUs/>} />
                     <Route path="/contact" element={<ContactUs />} />
                     <Route path="/postReview" element={<ReviewForm />} />
                     <Route path="/cart" element={<Cart />} />
