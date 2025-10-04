@@ -36,7 +36,7 @@ export default function Cart() {
                             <span className=" font-semibold text-gray-600 text-center md:text-left">{item.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
                         </div>
                         <div className="w-[190px] h-full flex flex-row text-4xl md:text-md justify-center items-center pl-10 pr-[10px]">
-                            <button className='flex justify-center items-center w-[30px] text-white rounded-xl bg-accent cursor-pointer hover:bg-blue-600' onClick={() => {
+                            <button className='flex justify-center p-3 w-[20px] h-[30px] items-center text-white rounded-xl bg-accent cursor-pointer hover:bg-blue-600' onClick={() => {
                                 let updatedCart;
                                 if (item.quantity > 1) {
                                     updatedCart = addToCart(item, -1);
@@ -47,7 +47,7 @@ export default function Cart() {
                                 setCart(updatedCart || getCart());
                             }}>-</button>
                             <span className="text-sm mx-[10px] text-gray-500">Quantity: {item.quantity}</span>
-                            <button className='flex justify-center items-center w-[30px] text-white rounded-xl bg-accent cursor-pointer hover:bg-blue-600' onClick={()=>{
+                            <button className='flex justify-center items-center p-3 w-[20px] h-[30px] text-white rounded-xl bg-accent cursor-pointer hover:bg-blue-600' onClick={()=>{
                                 addToCart(item, 1)
                                 setCart(getCart())
                             }}>+</button>

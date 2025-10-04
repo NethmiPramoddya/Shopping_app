@@ -13,6 +13,8 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import AdminDashboard from "./admin/AdminDashboard";
+import Users from "./admin/Users";
 
 export default function AdminPage() {
   const Navigate = useNavigate()
@@ -58,11 +60,12 @@ export default function AdminPage() {
         </div>
         <div className="w-[calc(100%-300px)] bg-white">
           <Routes path="/*">
-          <Route path = "/" element={<h1>Dashboard</h1>}/>
+          <Route path = "/" element={<AdminDashboard/>}/>
           <Route path = "/products" element={<ProductsAdminPage/>}/>
           <Route path = "/newProduct" element={<AddProductAdminPage/>}/>
           <Route path = "/orders" element={<OrdersPageAdmin/>}/>
           <Route path = "/updateProduct" element={<UpdateProductPage/>}/>
+          <Route path = "/users" element={<Users/>}/>
           </Routes>
         </div>
       </>:<Loader />}

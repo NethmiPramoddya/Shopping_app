@@ -53,8 +53,8 @@ export default function ContactUs() {
         </p>
       </div>
 
-      <div className="w-full h-[700px] flex flex-row items-center justify-center bg-[#F8FAFC] mt-10 gap-10 overflow-x-hidden">
-        <div className="w-[27%] h-[600px] shadow-2xl rounded-xl bg-white m-4 flex flex-col items-center justify-center">
+      <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-10 overflow-x-hidden px-4 lg:px-0">
+        <div className="w-full lg:w-[27%] h-[600px] shadow-xl rounded-xl bg-white m-4 flex flex-col items-center justify-center">
           <div className="w-20 h-20 rounded-full bg-pink-200 flex justify-center items-center">
             <FiPhone className="text-4xl text-pink-600 " />
           </div>
@@ -69,7 +69,7 @@ export default function ContactUs() {
           </p>
         </div>
 
-        <div className="w-[27%] h-[600px] shadow-2xl rounded-xl bg-white m-4 flex flex-col items-center justify-center">
+        <div className="w-full lg:w-[27%] h-[600px] shadow-xl rounded-xl bg-white m-4 flex flex-col items-center justify-center">
           <div className="w-20 h-20 rounded-full bg-pink-200 flex justify-center items-center">
             <GoMail className="text-4xl text-pink-600 " />
           </div>
@@ -85,7 +85,7 @@ export default function ContactUs() {
           </p>
         </div>
 
-        <div className="w-[27%] h-[600px] shadow-2xl rounded-xl bg-white m-4 flex flex-col items-center justify-center">
+        <div className="w-full lg:w-[27%] h-[600px] shadow-xl rounded-xl bg-white m-4 flex flex-col items-center justify-center">
           <div className="w-20 h-20 rounded-full bg-pink-200 flex justify-center items-center">
             <RxQuestionMarkCircled className="text-4xl text-pink-600 " />
           </div>
@@ -100,11 +100,11 @@ export default function ContactUs() {
         </div>
       </div>
 
-      <div className="w-full flex flex-col">
-        <div className="font-bold text-3xl mb-5 px-24 text-accent">Send Us a Message</div>
-        <div className=" flex items-center justify-center px-22">
-          <div className="max-w-6xl w-full shadow-2xl rounded-xl bg-white m-4 p-10 ">
-            <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
+      <div className="w-full flex flex-col px-4 sm:px-0 bg-[#F8FAFC]">
+        <div className="font-bold text-2xl sm:text-3xl mb-5 text-accent text-center sm:text-left mt-2 ml-12">Send Us a Message</div>
+        <div className=" flex items-center justify-center">
+          <div className="max-w-6xl w-full shadow-2xl rounded-xl bg-white m-4 p-6 sm:p-10 ">
+            <form className="flex flex-col gap-4 sm:gap-6" onSubmit={handleSubmit}>
                 {/* Name */}
                 <div className="flex flex-col">
                   <label className="font-medium text-lg mb-2">Your Name</label>
@@ -157,15 +157,15 @@ export default function ContactUs() {
     </div>
   </div>
 
-    <div className="w-full flex flex-col">
-        <div className="font-bold text-3xl mb-5 px-24 pt-10 text-accent">Visit Our Stores</div>
-        <div className=" flex flex-col items-center justify-center px-22 space-y-10">
-          <div className="max-w-6xl w-full shadow-2xl rounded-xl grid grid-cols-2 bg-white ">
+    <div className="w-full flex flex-col px-4 sm:px-0">
+        <div className="font-bold text-2xl sm:text-3xl mb-5 pt-10 text-accent text-center sm:text-left ml-12">Visit Our Stores</div>
+        <div className="flex flex-col items-center justify-center space-y-6 sm:space-y-10">
+          <div className="max-w-6xl w-full shadow-2xl rounded-xl grid grid-cols-1 lg:grid-cols-2 bg-white">
             <div>
-                <img src="/photo-store1_1604328698692-f76ea9498e76.jpg" alt="" className="w-[500px] h-[300px] object-cover rounded-xl"/>
+                <img src="/photo-store1_1604328698692-f76ea9498e76.jpg" alt="" className="w-full h-[300px] lg:h-[300px] object-cover rounded-t-xl lg:rounded-l-xl lg:rounded-tr-none"/>
             </div>
-            <div className="flex flex-col py-5 space-y-4">
-                  <h1 className="text-accent font-semibold text-xl pb-3">Glamoré Flagship Store</h1>
+            <div className="flex flex-col py-5 px-4 sm:px-6 space-y-3 lg:space-y-4">
+                  <h1 className="text-accent font-semibold text-xl lg:text-xl pb-3">Glamoré Flagship Store</h1>
                   <div className="flex flex-row space-x-2">
                     <HiOutlineLocationMarker className="text-3xl text-pink-600 font-bold "/>
                     <p className="text-lg ">123 Beauty Blvd, New York, NY 10001</p>
@@ -179,32 +179,32 @@ export default function ContactUs() {
                     <p className="text-lg ">Mon-Sat: 10am-8pm, Sun: 11am-6pm</p>
                   </div>
 
-                  <button className="w-[200px] h-[50px] text-center border border-accent rounded-lg bg-white text-accent hover:text-white hover:bg-accent cursor-pointer font-semibold">Get Directions</button>
+                  <button className="w-full sm:w-[200px] h-[50px] text-center border border-accent rounded-lg bg-white text-accent hover:text-white hover:bg-accent cursor-pointer font-semibold">Get Directions</button>
             </div>
           </div>
 
-          <div className="max-w-6xl w-full shadow-2xl rounded-xl grid grid-cols-2 bg-white mb-10 ">
+          <div className="max-w-6xl w-full shadow-2xl rounded-xl grid grid-cols-1 lg:grid-cols-2 bg-white mb-10">
             <div>
-                <img src="/photo-saleStore_1607083206968-13611e3d76db.jpg" alt="" className="w-[500px] h-[300px] object-cover rounded-xl"/>
+                <img src="/photo-saleStore_1607083206968-13611e3d76db.jpg" alt="" className="w-full h-[300px] lg:h-[300px] object-cover rounded-t-xl lg:rounded-l-xl lg:rounded-tr-none"/>
             </div>
-            <div className="flex flex-col py-5 space-y-4">
-                  <h1 className="text-accent font-semibold text-xl pb-3">Glamoré Beauty Boutique</h1>
-                  <div className="flex flex-row space-x-2">
-                    <HiOutlineLocationMarker className="text-3xl text-pink-600 font-bold "/>
+            <div className="flex flex-col py-5 px-4 sm:px-6 space-y-3 lg:space-y-4">
+                  <h1 className="text-accent font-semibold text-xl lg:text-xl pb-3">Glamoré Beauty Boutique</h1>
+                  <div className="flex flex-row space-x-2 items-center">
+                    <HiOutlineLocationMarker className="text-3xl text-pink-600 font-bold"/>
                     <p className="text-lg ">456 Cosmetic Ave, Los Angeles, CA 90048</p>
                   </div>
-                  <div className="flex flex-row space-x-4">
-                    <FiPhone className="text-2xl text-pink-600 font-light "/>
+                  <div className="flex flex-row space-x-4 items-center">
+                    <FiPhone className="text-2xl text-pink-600 font-light"/>
                     <p className="text-lg ">+1 (310) 555-1234</p>
                   </div>
-                  <div className="flex flex-row space-x-4 pb-3">
-                    <FaRegClock className="text-2xl text-pink-600 "/>
+                  <div className="flex flex-row space-x-4 pb-3 items-center">
+                    <FaRegClock className="text-2xl text-pink-600"/>
                     <p className="text-lg ">Mon-Sat: 9am-9pm, Sun: 10am-7pm</p>
                   </div>
 
-                  <button className="w-[200px] h-[50px] text-center border border-accent rounded-lg bg-white text-accent hover:text-white hover:bg-accent cursor-pointer font-semibold">Get Directions</button>
+                  <button className="w-full sm:w-[200px] h-[50px] text-center border border-accent rounded-lg bg-white text-accent hover:text-white hover:bg-accent cursor-pointer font-semibold">Get Directions</button>
             </div>
-          </div>
+            </div>
           </div>
     </div>
 

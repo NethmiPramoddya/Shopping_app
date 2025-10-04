@@ -43,17 +43,24 @@ export default function Header() {
                   </button>
 
                   <button className='text-accent text-2xl flex flex-row items-center' onClick={()=>{setIsOpen(false)
-                    navigate("/")
+                    navigate("/about-us")
                   }}>
                     <IoStorefrontOutline className='text-accent text-2xl mr-2'/>
-                    Products
+                    About Us
                   </button>
 
                   <button className='text-accent text-2xl flex flex-row items-center' onClick={()=>{setIsOpen(false)
-                    navigate("/")
+                    navigate("/contact")
                   }}>
                     <IoStorefrontOutline className='text-accent text-2xl mr-2'/>
-                    Products
+                    Contact us
+                  </button>
+
+                  <button className='text-accent text-2xl flex flex-row items-center' onClick={()=>{setIsOpen(false)
+                    navigate("/reviews")
+                  }}>
+                    <IoStorefrontOutline className='text-accent text-2xl mr-2'/>
+                    Reviews
                   </button>
 
 

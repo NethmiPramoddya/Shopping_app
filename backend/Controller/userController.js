@@ -286,3 +286,20 @@ export async function contactUs(req, res){
         })
     }
 }
+
+// GET all users
+export async function getAllUsers(req, res) {
+    try {
+        const users = await User.find().select('-password'); // Exclude passwords for security
+        res.status(200).json({
+            success: true,
+            users: users
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch users",
+            error: err.message
+        });
+    }
+}
