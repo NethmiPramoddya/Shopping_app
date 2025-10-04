@@ -36,3 +36,39 @@ export async function DeleteReview(req,res) {
         res.status(500).json({ error: err.message });
     }
 }
+
+// Get all reviews (for global reviews page)
+export async function getAllReviews(req, res) {
+  try {
+    const reviews = await ReviewModel.find()
+      .populate("userId", "firstName lastName")         // get user info
+      .populate("productId", "name image")              // get product name + image
+      .sort({ createdAt: -1 });                         // newest first
+
+    res.json(reviews);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+// Get highlights (Top Rated + Most Reviewed)
+export async function getReviewHighlights(req, res) {
+  try {
+    const topRated = await ReviewModel.aggregate([
+      { $group: { _id: "$productId", avgRating: { $avg: "$rating" } } },
+      { $sort: { avgRating: -1 } },
+      { $limit: 5 }
+    ]);
+
+    const mostReviewed = await ReviewModel.aggregate([
+      { $group: { _id: "$productId", count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: 5 }
+    ]);
+
+    res.json({ topRated, mostReviewed });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
