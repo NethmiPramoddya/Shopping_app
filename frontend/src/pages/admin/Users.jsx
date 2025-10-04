@@ -37,7 +37,7 @@ export default function Users() {
         <table className="min-w-full bg-white shadow rounded-lg">
           <thead>
             <tr className="bg-gray-100 border-b">
-              <th className="py-2 px-4 text-left">#</th>
+              <th className="py-2 px-4 text-left"></th>
               <th className="py-2 px-4 text-left">First Name</th>
               <th className="py-2 px-4 text-left">Last Name</th>
               <th className="py-2 px-4 text-left">Email</th>
