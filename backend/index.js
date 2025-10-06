@@ -8,6 +8,7 @@ import productRouter from './router/productRoter.js';
 import dotenv from 'dotenv'
 import orderRouter from './router/orderRouter.js';
 import reviewRouter from './router/reviewRouter.js';
+import dashboaRouter from './router/dashboardRouter.js';
 dotenv.config()
 
 const app = express();
@@ -56,6 +57,7 @@ app.use("/api/users", userRouter)
 app.use("/api/products", productRouter)
 app.use("/api/orders", orderRouter)
 app.use("/api/reviews", reviewRouter)
+app.use("/api/dashboard", dashboaRouter)
 
 
 
