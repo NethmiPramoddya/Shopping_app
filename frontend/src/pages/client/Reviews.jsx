@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import heroBg from "../../assets/reviews.jpg";
+import axios from "axios";
 
 
 export default function Reviews() {
@@ -11,13 +12,13 @@ export default function Reviews() {
 
   useEffect(() => {
     // Fetch reviews
-    fetch("http://localhost:5000/api/reviews")
-      .then((res) => res.json())
-      .then((data) => {
-        setReviews(data);
-        setFilteredReviews(data);
+      axios.get(import.meta.env.VITE_BACKEND_URL + "/api/reviews")
+      .then((res) => {
+        setReviews(res.data);
+        setFilteredReviews(res.data);
       })
       .catch((err) => console.error(err));
+
   }, []);
 
   // Apply filters whenever search/rating/product changes
