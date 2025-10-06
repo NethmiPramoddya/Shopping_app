@@ -73,12 +73,12 @@ export default function LoginPage() {
           <input type="password" onChange={(e)=>{setPassword(e.target.value)}} className="w-[350px] border border-white rounded-xl h-[40px]" />
         </div>
 
-        <button onClick={login} className="w-[350px] h-[40px] rounded-xl bg-accent text-white text-lg mt-5 hover:bg-accent transition-all duration-300">Login</button>
+        <button onClick={login} className="w-[350px] h-[40px] rounded-xl bg-accent text-white text-lg mt-5 hover:bg-accent-dark transition-all duration-300 cursor-pointer">Login</button>
 
-        <button onClick={googleLogin} className="w-[350px] h-[40px] rounded-xl bg-accent text-white text-lg mt-5 hover:bg-accent transition-all duration-300">Google Login</button>
+        <button onClick={googleLogin} className="w-[350px] h-[40px] rounded-xl bg-accent text-white text-lg mt-5 hover:bg-accent-dark transition-all duration-300 cursor-pointer">Google Login</button>
 
-          <p>Don't have an account? <Link to="/register" className="text-accent">Sign Up</Link> from here</p>
-          <p>Forget Password? <Link to="/forget" className="text-accent">Reset Password</Link> from here</p>
+          <p>Don't have an account? <Link to="/register" className="text-accent cursor-pointer">Sign Up</Link> from here</p>
+          <p>Forget Password? <Link to="/forget" className="text-accent cursor-pointer">Reset Password</Link> from here</p>
 
 
       </div>
