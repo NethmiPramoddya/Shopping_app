@@ -48,7 +48,7 @@ export default function LoginPage() {
       if(response.data.role == "admin"){
         //window.location.href = "/admin"
         navigate("/admin")
-      }else if(response.data.role == "user"){
+      }else if(response.data.role == "USER"){
         //window.location.href = "/"
         navigate("/")
       }
