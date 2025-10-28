@@ -13,6 +13,8 @@ import Test3 from './pages/test3'
 import ClientPage from './pages/client/clientPage'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import ForgetPassword from './pages/client/ForgetPassword'
+import LoginPage1 from './pages/loginPage1'
+import RegisterPage1 from './pages/registerPage1'
 
 function App() {
   
@@ -24,11 +26,11 @@ function App() {
         <Toaster position='top-right' />
         <Routes path ="/">
         
-        <Route path='/login' element={<LoginPage/>}/>
+        <Route path='/login' element={<LoginPage1/>}/>
         <Route path='/test' element={<TestPage/>}/>
         <Route path='/test2' element={<Test2Page/>}/>
         <Route path='/test3' element={<Test3/>}/>
-        <Route path='/register' element={<RegisterPage/>}/>
+        <Route path='/register' element={<RegisterPage1/>}/>
         <Route path='/forget' element={<ForgetPassword/>}/>
         <Route path='/admin/*' element={<AdminPage/>}/>
         <Route path='/*' element={<ClientPage/>}/>
