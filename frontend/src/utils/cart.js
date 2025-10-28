@@ -108,14 +108,19 @@ export function addToCart(product, qty){
                 return index !== existingProductIndex;
             });
             localStorage.setItem("cart", JSON.stringify(newCart));
+            window.dispatchEvent(new Event('cartUpdated'));
             return; // Exit the function after removing the item
          } else {
             cart[existingProductIndex].quantity = newQty;
             localStorage.setItem("cart", JSON.stringify(cart));
+            window.dispatchEvent(new Event('cartUpdated'));
          }
     }
     // Save the updated cart back to localStorage
     localStorage.setItem("cart", JSON.stringify(cart));
+    
+    // Dispatch custom event to notify components about cart changes
+    window.dispatchEvent(new Event('cartUpdated'));
 }
 
 export function getTotal(){
