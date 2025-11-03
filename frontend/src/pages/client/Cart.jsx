@@ -3,6 +3,7 @@ import { addToCart, getCart, getTotal } from '../../utils/cart'
 import { FaTrashAlt, FaMinus, FaPlus, FaShoppingBag, FaHeart } from "react-icons/fa";
 import { HiSparkles } from "react-icons/hi";
 import { useNavigate } from 'react-router-dom';
+import { formatLkrPrice } from '../../utils/currency';
 
 export default function Cart() {
     const [cart, setCart] = useState(() => {
@@ -100,7 +101,7 @@ export default function Cart() {
                           {item.name}
                         </h3>
                         <p className="text-lg text-gray-600 mb-4">
-                          Rs.{item.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} each
+                          {formatLkrPrice(item.price)} each
                         </p>
                         
                         {/* Quantity Controls */}
@@ -128,7 +129,7 @@ export default function Cart() {
                       {/* Price and Remove */}
                       <div className="text-center md:text-right">
                         <div className="text-2xl font-bold text-transparent bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text mb-4">
-                          Rs.{(item.quantity * item.price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                          {formatLkrPrice(item.quantity * item.price)}
                         </div>
                         
                         <button 
@@ -156,7 +157,7 @@ export default function Cart() {
                   <div className="space-y-4 mb-8">
                     <div className="flex justify-between items-center text-gray-600">
                       <span>Subtotal ({cart.reduce((sum, item) => sum + item.quantity, 0)} items)</span>
-                      <span>${getTotal().toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+                      <span>{formatLkrPrice(getTotal())}</span>
                     </div>
                     <div className="flex justify-between items-center text-gray-600">
                       <span>Shipping</span>
@@ -166,7 +167,7 @@ export default function Cart() {
                       <div className="flex justify-between items-center">
                         <span className="text-xl font-bold text-gray-800">Total</span>
                         <span className="text-2xl font-bold text-transparent bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text">
-                          Rs.{getTotal().toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                          {formatLkrPrice(getTotal())}
                         </span>
                       </div>
                     </div>
