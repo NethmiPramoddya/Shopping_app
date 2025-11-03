@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { formatLkrPrice } from '../utils/currency';
 
 export default function OriginalProductcard1(props) {
     const product = props.product
@@ -43,15 +44,15 @@ export default function OriginalProductcard1(props) {
           {product.labelledPrice > product.price ? (
             <div className='flex items-center gap-2'>
               <span className='text-lg font-bold text-gray-900'>
-                Rs.{product.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                {formatLkrPrice(product.price)}
               </span>
               <span className='text-sm text-gray-400 line-through'>
-                Rs.{product.labelledPrice.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                {formatLkrPrice(product.labelledPrice)}
               </span>
             </div>
           ) : (
             <span className='text-lg font-bold text-gray-900'>
-              ${product.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+              {formatLkrPrice(product.price)}
             </span>
           )}
         </div>
