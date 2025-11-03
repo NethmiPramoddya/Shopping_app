@@ -3,6 +3,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { useLocation, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast';
 import axios from 'axios'
+import { formatLkrPrice } from '../../utils/currency'
 
 export default function CheckoutPage1() {
   const location = useLocation()
@@ -13,7 +14,7 @@ export default function CheckoutPage1() {
   const [name, setName] = useState("")
   const [address, setAddress] = useState("")
   const [phone, setPhone] = useState("")
-  const [orderPlaced, setOrderPlaced] = useState(false)
+
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -55,47 +56,37 @@ export default function CheckoutPage1() {
     return total;
   }
 
-  async function placeOrder() {
-    const token = localStorage.getItem('token');
-    if (token == null) {
-      toast.error("Plaease loging to place an order")
-      navigate('/login');
+  function proceedToPayment() {
+    console.log("Proceeding to payment...");
+    // Validate customer information
+    if (!name || !address || !phone) {
+      toast.error("Please fill in all required fields");
       return;
     }
 
-    if (name == "" || address == "" || phone == "") {
-      toast.error("pls fill all the feilds")
-      return;
-    }
+    // Prepare order data for payment (NO ORDER CREATION YET)
+    const orderData = {
+      items: cart.map(item => ({
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        productId: item.productId
+      })),
+      total: getTotal(),
+      customerInfo: {
+        name: name,
+        email: user?.email || '',
+        phone: phone,
+        address: address
+      }
+    };
 
-    const order = {
-      address: address,
-      phone: phone,
-      items: []
-    }
+    // Store pending order data
+    localStorage.setItem('pendingOrder', JSON.stringify(orderData));
 
-    cart.forEach((item) => {
-      order.items.push({
-        productId: item.productId,
-        qty: item.quantity
-      })
-    })
-
-    try {
-      await axios.post(import.meta.env.VITE_BACKEND_URL + "/api/orders", order, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      toast.success("Order placed successfully")
-      setOrderPlaced(true)
-
-    } catch (error) {
-      console.error("Error placing order:", error);
-      toast.error("failed to place order")
-      return;
-    }
-
+    // Navigate to payment page (Order will be created AFTER successful payment)
+    console.log("Navigating to /payment with orderData:", orderData);
+    navigate('/payment', { state: { orderData } });
   }
 
   return (
@@ -138,7 +129,7 @@ export default function CheckoutPage1() {
                         <div className="flex-grow text-center md:text-left">
                           <h3 className="font-serif text-lg font-bold text-gray-800 mb-1">{item.name}</h3>
                           <p className="text-rose-600 font-semibold">
-                            ${item.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                            {formatLkrPrice(item.price)}
                           </p>
                         </div>
 
@@ -175,7 +166,7 @@ export default function CheckoutPage1() {
                         {/* Item Total */}
                         <div className="text-center md:text-right">
                           <p className="font-serif text-xl font-bold text-gray-800">
-                            ${(item.quantity * item.price).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                            {formatLkrPrice(item.quantity * item.price)}
                           </p>
                         </div>
 
@@ -207,7 +198,7 @@ export default function CheckoutPage1() {
               <div className="space-y-4 mb-8">
                 <div className="flex justify-between items-center py-2 border-b border-gray-200">
                   <span className="text-gray-600">Subtotal</span>
-                  <span className="font-semibold">${getTotal().toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  <span className="font-semibold">{formatLkrPrice(getTotal())}</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-200">
                   <span className="text-gray-600">Shipping</span>
@@ -216,7 +207,7 @@ export default function CheckoutPage1() {
                 <div className="flex justify-between items-center py-3 text-xl font-bold bg-gradient-to-r from-rose-50 to-pink-50 rounded-xl px-4">
                   <span className="text-gray-800">Total</span>
                   <span className="bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">
-                    ${getTotal().toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    {formatLkrPrice(getTotal())}
                   </span>
                 </div>
               </div>
@@ -261,19 +252,12 @@ export default function CheckoutPage1() {
                 </div>
               </div>
 
-              {/* Place Order Button */}
+              {/* Proceed to Payment Button */}
               <button 
-                className={`w-full font-semibold py-4 px-8 rounded-full hover:shadow-lg transition-all duration-300 cursor-pointer ${
-                  orderPlaced 
-                    ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white border border-green-700 hover:border-green-600' 
-                    : 'bg-gradient-to-r from-slate-900 via-gray-900 to-slate-900 text-white border border-gray-700 hover:border-gray-600'
-                }`}
-                onClick={orderPlaced ? () => {
-                  // Payment gateway integration will go here
-                  toast.success("Redirecting to payment gateway...")
-                } : placeOrder}
+                className="w-full font-semibold py-4 px-8 rounded-full hover:shadow-lg transition-all duration-300 cursor-pointer bg-gradient-to-r from-slate-900 via-gray-900 to-slate-900 text-white border border-gray-700 hover:border-gray-600"
+                onClick={proceedToPayment}
               >
-                {orderPlaced ? '💳 Pay Now' : 'Complete Order'}
+                💳 Proceed to Payment
               </button>
 
               {/* Security Badge */}

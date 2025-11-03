@@ -6,6 +6,7 @@ import ImageSlider from "../../components/ImageSlider";
 import { addToCart, getCart } from "../../utils/cart";
 import toast from "react-hot-toast";
 import ImageSlider1 from "../../components/ImageSlider1";
+import { formatLkrPrice } from "../../utils/currency";
 
 export default function ProductOverviewPage1() {
   const params = useParams();
@@ -152,25 +153,19 @@ export default function ProductOverviewPage1() {
                       <div className="space-y-2">
                         <div className="flex items-center gap-3">
                           <span className="text-lg text-gray-500 line-through">
-                            Rs.{product.labelledPrice.toLocaleString("en-US", {
-                              minimumFractionDigits: 2,
-                            })}
+                            {formatLkrPrice(product.labelledPrice)}
                           </span>
                           <span className="bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
                             SALE
                           </span>
                         </div>
                         <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">
-                          Rs.{product.price.toLocaleString("en-US", {
-                            minimumFractionDigits: 2,
-                          })}
+                          {formatLkrPrice(product.price)}
                         </div>
                       </div>
                     ) : (
                       <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">
-                        ${product.price.toLocaleString("en-US", {
-                          minimumFractionDigits: 2,
-                        })}
+                        {formatLkrPrice(product.price)}
                       </div>
                     )}
                   </div>

@@ -72,14 +72,14 @@ export default function OrdersPageAdmin() {
         </tbody>
 
       </table>
-<div className="space-y-4 mb-6 max-h-[250px] overflow-y-auto pr-2">
+
   {
   popupVisible && clickOrder && (
-    <div className="fixed top-0 left-0 w-full h-full bg-[#00000080] flex justify-center items-center z-50">
-      <div className="w-[650px] max-h-[90vh] bg-white rounded-xl shadow-lg relative p-6">
+    <div className="fixed inset-0 w-full h-full bg-[#00000080] flex justify-center items-center z-50 p-4">
+      <div className="w-full max-w-[650px] max-h-[90vh] bg-white rounded-xl shadow-lg relative p-6 overflow-y-auto">
 
         {
-            (orderStatus!==clickOrder.status || orderNotes!==clickOrder.notes)&&<button className='absolute w-[120px] h-[40px] top-2 right-2 bg-accent text-white rounded-lg cursor-pointer'
+            (orderStatus!==clickOrder.status || orderNotes!==clickOrder.notes)&&<button className='absolute w-[120px] h-[40px] top-4 right-16 bg-accent text-white rounded-lg cursor-pointer text-sm'
             onClick={async()=>{
                 setPopupVisible(false)
                 try{
@@ -150,21 +150,21 @@ export default function OrdersPageAdmin() {
 
         {/* Items List (scrollable) */}
         <h3 className="text-lg font-semibold mb-2 text-gray-700">Items</h3>
-        <div className="space-y-4 mb-6 max-h-[250px] overflow-y-auto pr-2">
+        <div className="space-y-4 mb-6 max-h-[200px] overflow-y-auto border rounded-lg p-2">
           {clickOrder.items.map((item) => (
             <div key={item._id} className="flex items-center justify-between border p-3 rounded-lg shadow-sm hover:bg-gray-50">
               {/* Product Image + Name */}
-              <div className="flex items-center gap-3">
-                <img src={item.image} alt={item.name} className="w-14 h-14 object-cover rounded-md" />
-                <div>
-                  <p className="font-semibold text-gray-800">{item.name}</p>
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded-md flex-shrink-0" />
+                <div className="min-w-0 flex-1">
+                  <p className="font-semibold text-gray-800 truncate">{item.name}</p>
                   <p className="text-sm text-gray-500">Qty: {item.qty}</p>
                 </div>
               </div>
               {/* Price */}
-              <div className="text-right">
-                <p className="text-gray-700">Rs. {item.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
-                <p className="text-sm text-gray-500">Subtotal: Rs. {(item.price * item.qty).toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
+              <div className="text-right flex-shrink-0 ml-3">
+                <p className="text-gray-700 text-sm">Rs. {item.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
+                <p className="text-xs text-gray-500">Subtotal: Rs. {(item.price * item.qty).toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
               </div>
             </div>
           ))}
@@ -175,21 +175,18 @@ export default function OrdersPageAdmin() {
           Total: Rs. {clickOrder.total.toLocaleString("en-US", { minimumFractionDigits: 2 })}
         </div>
 
-        {/* Close Button (outside popup) */}
+        {/* Close Button */}
         <button
-          className="absolute -top-5 -right-5 w-10 h-10 bg-red-500 rounded-full text-white font-bold 
-                     hover:bg-transparent hover:text-red-500 border-2 border-red-500 
-                     flex items-center justify-center cursor-pointer"
+          className="absolute top-4 right-4 w-8 h-8 bg-red-500 rounded-full text-white font-bold 
+                     hover:bg-red-600 flex items-center justify-center cursor-pointer text-sm"
           onClick={() => setPopupVisible(false)}
         >
-          X
+          ✕
         </button>
       </div>
     </div>
   )
 }
-
-</div>
 
       <Paginator currentPage={page} setCurrentPage={setPage} totalPages={totalPages} setPage={setPage} limit={limit} setLimit={setLimit} setLoading={setLoading} />
     </div>

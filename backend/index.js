@@ -9,6 +9,7 @@ import dotenv from 'dotenv'
 import orderRouter from './router/orderRouter.js';
 import reviewRouter from './router/reviewRouter.js';
 import dashboaRouter from './router/dashboardRouter.js';
+import paymentRouter from './router/paymentRouter.js';
 dotenv.config()
 
 const app = express();
@@ -18,27 +19,38 @@ app.use(cors())
 
 app.use(
     (req,res,next)=>{
+        console.log(`=== JWT MIDDLEWARE === ${req.method} ${req.url}`);
         const value = req.header("Authorization")
+        console.log("Authorization header:", value ? "Present" : "Missing");
+        
         if(value!= null) {
-        const token = value.replace("Bearer ", "")
-        jwt.verify(token, process.env.JWT_SECRET, (err,decoded)=>{
-            if(decoded == null){
-                res.status(403).json({
-                    message : "unauthorized"
-                })
-            }else{
-                req.user = decoded
-                next()
-            }
+            const token = value.replace("Bearer ", "")
+            console.log("Token extracted, length:", token.length);
             
-        }
-    )
+            jwt.verify(token, process.env.JWT_SECRET, (err,decoded)=>{
+                if(err) {
+                    console.log("JWT verification error:", err.message);
+                    return res.status(403).json({
+                        message : "unauthorized",
+                        error: err.message
+                    })
+                }
+                if(decoded == null){
+                    console.log("Decoded is null");
+                    return res.status(403).json({
+                        message : "unauthorized"
+                    })
+                }else{
+                    console.log("JWT verified successfully for user:", decoded.email);
+                    req.user = decoded
+                    next()
+                }
+            })
         }else{
+            console.log("No authorization header, proceeding...");
             next()
         }
-        
     }
-    
 )
 
 const connectionString = process.env.MONGO_URI
@@ -58,6 +70,7 @@ app.use("/api/products", productRouter)
 app.use("/api/orders", orderRouter)
 app.use("/api/reviews", reviewRouter)
 app.use("/api/dashboard", dashboaRouter)
+app.use("/api/payments", paymentRouter)
 
 
 

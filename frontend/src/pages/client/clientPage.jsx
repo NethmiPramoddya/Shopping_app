@@ -13,6 +13,9 @@ import AboutUs from "../AboutUs";
 import ProductsPage1 from "./productspage1";
 import ProductOverviewPage1 from "./ProductOverviewPage1";
 import CheckoutPage1 from "./CheckoutPage1";
+import PaymentPage from "./PaymentPage";
+import PaymentSuccess from "./PaymentSuccess";
+import MyOrders from "./MyOrders";
 
 export default function ClientPage() {
     return(
@@ -28,6 +31,9 @@ export default function ClientPage() {
                     <Route path="/postReview" element={<ReviewForm />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/checkout" element={<CheckoutPage1 />} />
+                    <Route path="/payment" element={<PaymentPage />} />
+                    <Route path="/payment-success" element={<PaymentSuccess />} />
+                    <Route path="/orders" element={<MyOrders />} />
                     <Route path="/overview/:productId" element={<ProductOverviewPage1 />} />
                     <Route path="/*" element={<h1 className="text-2xl text-center">404 not found</h1>} />
                 </Routes>
